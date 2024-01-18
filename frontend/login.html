@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/nav.css">
+</head>
+<body>
+    <nav>
+        <div class="navbar">
+       
+
+            <h1 id="logo">AudioBook</h1><span>+</span>
+           
+
+          <div class="search">
+            <input type="text" id="yousearch" placeholder="Search for ProductS, Brands and More" >
+         <i class="fas fa-search"></i>
+
+          </div>
+         
+            <button id="Signup">Signup</button>
+            <h4 id="h4username"></h4>
+            <button id="login">Login</button>
+           
+           
+
+
+        </div>
+    </nav>
+
+    <div class="login-container">
+      
+        <form id="loginForm">
+            <!-- Include relevant input fields for login -->
+            <!-- Example: -->
+            <label for="loginUserEmail">UserEmail:</label>
+            <input type="text" id="loginEmail" text="loginEmail" required>
+
+            <label for="loginPassword">Password:</label>
+            <input type="password" id="loginPassword" text="loginPassword" required>
+
+            <button id="loginbtn"type="submit">Login</button>
+            <h5>Or</h5>
+            <button>Register</button>
+        </form>
+    
+    </div>
+
+    
+    <footer>
+        <div class="footer-section about">
+          <h2>About Us</h2>
+          <p>
+            Discover a seamless online shopping haven with our user-friendly e-commerce platform, offering curated products and a streamlined experience from browsing to checkout</p>
+        </div>
+    
+        <div class="footer-section contact">
+          <h2>Contact Us</h2>
+          <p>Email: SwipeKart+@gmail.com<br>Phone: +1 123 456 7890</p>
+        </div>
+    
+        <div class="footer-section links">
+          <h2>Quick Links</h2>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+    
+        <div class="footer-section newsletter">
+          <h2>Subscribe to Our SwipeKart</h2>
+          <form action="#" method="post">
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </footer>
+
+</body>
+</html>
+<script>
+  
+        const email=document.getElementById("loginEmail")
+    const password=document.getElementById("loginPassword")
+    const loginForm=document.getElementById("loginForm")
+    const name=localStorage.getItem("name")
+    h4username.innerHTML=name
+    loginForm.addEventListener("submit",(e)=>{
+        e.preventDefault()
+        fetch(`https://real-lime-salamander-sari.cyclic.app/users/login`,{
+            method:"POST",
+            headers:{
+                "Content-type":"application/json",
+            },
+            body:JSON.stringify({
+                email:email.value,
+                password:password.value
+            })
+        }).then((res)=>res.json()).then((data)=>{
+            console.log(data)
+            localStorage.setItem("token",data.token)
+            localStorage.setItem("name",data.name)
+            h4username.innerHTML=data.name
+           alert("login")
+           window.location.href = "./index.html"; 
+        }).catch((err)=>console.log(err))
+    })
+</script>

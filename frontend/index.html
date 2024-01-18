@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/nav.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-...your-sha-hash..." crossorigin="anonymous" />
+</head>
+<style>
+ #container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 15px;
+    padding: 15px;
+    max-width: 300px;
+    text-align: center;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#image img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+#tags {
+    margin-top: 15px;
+}
+
+h3 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+h4 {
+    color: #555;
+    margin-bottom: 8px;
+}
+
+p {
+    color: #777;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+button:hover {
+    background-color: #f62703;
+}
+
+
+</style>
+<body>
+    <nav>
+        <div class="navbar">
+       
+
+            <h1 id="logo">AudioBook</h1><span>+</span>
+           
+
+          <div class="search">
+            <input type="text" id="yousearch" placeholder="Search for ProductS, Brands and More" >
+         <i class="fas fa-search"></i>
+
+          </div>
+         
+            <button id="Signup">Signup</button>
+            <h4 id="h4username"></h4>
+            <button id="login">Login</button>
+            
+           
+           
+
+
+        </div>
+    </nav>
+
+    <div id="container">
+
+    </div>
+    <div id="buttonsdiv">
+
+    </div>
+
+
+
+    <footer>
+        <div class="footer-section about">
+          <h2>About Us</h2>
+          <p>
+            Discover a seamless online shopping haven with our user-friendly e-commerce platform, offering curated products and a streamlined experience from browsing to checkout</p>
+        </div>
+    
+        <div class="footer-section contact">
+          <h2>Contact Us</h2>
+          <p>Email: SwipeKart+@gmail.com<br>Phone: +1 123 456 7890</p>
+        </div>
+    
+        <div class="footer-section links">
+          <h2>Quick Links</h2>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+    
+        <div class="footer-section newsletter">
+          <h2>Subscribe to Our SwipeKart</h2>
+          <form action="#" method="post">
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </footer>
+    
+</body>
+</html>
+<script>
+    let signupButton = document.getElementById("Signup");
+let loginButton = document.getElementById("login");
+
+signupButton.addEventListener("click", () => {
+   
+    window.location.href = "./signup.html";
+});
+
+loginButton.addEventListener("click", () => {
+   
+    window.location.href = "./login.html";
+});
+
+const name=localStorage.getItem("name")
+    h4username.innerHTML=name
+    setTimeout(function(){
+       
+        localStorage.setItem("token","")
+        localStorage.setItem("name","")
+   }, 900000)
+
+
+   const container = document.getElementById("container")
+    const buttondiv = document.getElementById("buttonsdiv")
+    const token =localStorage.getItem("token")
+   
+    
+
+async function fetchCourses() {
+    try {
+        const response = await fetch('https://real-lime-salamander-sari.cyclic.app/course/courses');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+        return [];
+    }
+}
+    async function renderCourses() {
+        const courses = await fetchCourses();
+        container.innerHTML = "";
+
+        courses.forEach(async (course) => {
+            const cardDiv = document.createElement("div");
+            cardDiv.classList.add("card");
+
+            const imageDiv = document.createElement("div");
+            imageDiv.setAttribute("id", "image");
+
+            const img = document.createElement("img");
+            img.setAttribute("src", course.CoverImage);
+            img.setAttribute("alt", "");
+
+            const tagsDiv = document.createElement("div");
+            tagsDiv.setAttribute("id", "tags");
+
+            const titleH3 = document.createElement("h3");
+            titleH3.textContent = course.Title;
+
+            const descH4 = document.createElement("h4");
+            descH4.textContent = course.Description;
+
+            const instructorH4 = document.createElement("h4");
+            instructorH4.textContent = "Instructor: " + course.Instructor;
+
+            const lengthP = document.createElement("p");
+            lengthP.textContent = "Length: " + course.Length;
+
+      
+
+            const favoriteButton = createButton("Favorite", () => addToFavorites(course));
+            const playlistButton = createButton("All chapter Playlist", () => addToPlaylist(course._id));
+            const deleteCourseButton = createButton("Delete playlist", () => deleteCourse(course._id));
+
+            tagsDiv.appendChild(deleteCourseButton);
+            tagsDiv.appendChild(favoriteButton);
+            tagsDiv.appendChild(playlistButton);
+
+            cardDiv.appendChild(imageDiv);
+            imageDiv.appendChild(img);
+            cardDiv.appendChild(tagsDiv);
+            tagsDiv.appendChild(titleH3);
+            tagsDiv.appendChild(descH4);
+            tagsDiv.appendChild(instructorH4);
+            tagsDiv.appendChild(lengthP);
+           
+
+            container.appendChild(cardDiv);
+        });
+    }
+
+
+
+
+ 
+    // function createButton(label, onClickHandler) {
+    //     const button = document.createElement("button");
+    //     button.innerText = label;
+    //     button.addEventListener("click", onClickHandler);
+    //     return button;
+    // }
+
+  function deleteCourse(id) {
+        fetch(`https://real-lime-salamander-sari.cyclic.app/course/delete/${id}`, {
+            method: "DELETE",
+        })
+            .then((res) => {
+                // if (!res.ok) {
+                //     throw new Error(`Failed to delete course. Status: ${res.status}`);
+                // }
+                return res.json();
+            })
+            .then((result) => {
+                alert("deleted sucessfully");
+                if (result.flag) {
+                    fetchCourses();
+                }
+            })
+            .catch((error) => {
+                console.error("Error deleting course:", error.message);
+               
+            });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function createButton(text, onClick) {
+  const button = document.createElement("button");
+  button.textContent = text;
+  button.addEventListener("click", onClick);
+  return button;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function addToFavorites(audiobookData) {
+      
+            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+   
+            const isAlreadyFavorite = favorites.some(course => course.Title === audiobookData.Title);
+
+            if (!isAlreadyFavorite) {
+            
+                favorites.push(audiobookData);
+
+                localStorage.setItem("favorites", JSON.stringify(favorites));
+
+                alert('Added to favorites:', audiobookData);
+            } else {
+                alert('Already in favorites:', audiobookData);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function addToPlaylist(id) {
+    console.log(id)
+    window.location.href=`audio.html?course=${id}`
+    
+}
+
+
+
+
+
+
+
+renderCourses();
+
+
+</script>

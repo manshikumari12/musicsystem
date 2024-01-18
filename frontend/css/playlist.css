@@ -1,0 +1,138 @@
+/* Resetting default styles */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: black;
+    color: aliceblue;
+    border-bottom: 2.5px solid gray;
+    width: 100%;
+    line-height: 80px;
+    height: 80px;
+    font-size: 18px;
+    padding: 0 30px;
+    position: fixed; /* Fixed position for the navbar */
+    top: 0;
+    left: 0;
+    font-family: 'Agdasima', sans-serif;
+}
+
+.navbar a img {
+    top: 0;
+    float: left;
+    width: 80px;
+    height: 80px !important;
+    color: aliceblue;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: aliceblue;
+    text-align: center;
+    min-width: 120px;
+    padding: 0 30px;
+    position: relative;
+}
+
+.navbar a img:hover {
+    transform: scale(1.1);
+}
+
+.navbar a:hover {
+    color: red;
+    transform: scale(1.1);
+    text-shadow: 0 0 0 5px red;
+}
+
+/* Body styles */
+body {
+    background-color: black;
+}
+
+/* Content styles */
+.content {
+    float: left;
+    font-family: 'Agdasima', sans-serif;
+    font-size: 2pc;
+    color: aliceblue;
+    margin-top: 100px;
+    width: 700px; /* Use 'width' instead of 'inline-size' */
+    overflow-wrap: break-word;
+    margin-left: 100px;
+    overflow: hidden;
+}
+
+.content p {
+    padding-bottom: 20px;
+}
+
+.content:hover {
+    color: #d40404;
+    transition-duration: 2s;
+}
+
+/* Heading styles */
+h1 {
+    font-size: 70px;
+}
+
+h1:hover {
+    color: red;
+    text-shadow: 5px 5px rgb(137, 15, 15);
+    transition-duration: 2s;
+}
+
+/* Main styles */
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Correct property name */
+}
+
+/* Button styles */
+.btns {
+    margin-top: 20px;
+    background-color: rgb(127, 123, 123);
+    cursor: pointer;
+    color: rgb(245, 245, 245);
+    padding: 12px 20px;
+    float: left;
+    border-radius: 20px;
+    margin-left: 10px;
+}
+
+.btns:hover {
+    background: rgb(236, 6, 6);
+    color: #f7f3f3;
+    box-shadow: 0 0 0 7px rgb(137, 15, 15);
+    transition-duration: 2s;
+}
+
+/* Image styles */
+div img {
+    width: 300px;
+    float: right;
+    position: relative;
+    top: -380px;
+    left: -200px;
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+}
+
+div img:hover {
+    filter: grayscale(0%);
+    -webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    transition-duration: 2s;
+    box-shadow: 0 0 10px rgb(236, 6, 6);
+
+}
+
+
+content audio {
+    display: none;
+}

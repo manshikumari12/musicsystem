@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+
+    /* display: flex;
+    justify-content: center; */
+    align-items: center;
+    height: 100vh;
+}
+
+.signup-container,
+.login-container {
+  border: 1px solid red;
+    padding: 20px;
+    border-radius: 8px;
+  
+    margin: 40px;
+    width: 300px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button {
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: blue;
+}

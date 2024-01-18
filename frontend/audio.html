@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audiobook Details</title>
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/nav.css">
+</head>
+<style>
+ #audiobookDetailsContainer {
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 80px;
+}
+
+#audiobookDetails {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 15px;
+    padding: 15px;
+    max-width: 300px;
+    text-align: center;
+    background-color: #f8f8f8;
+}
+
+h5 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #555;
+    margin-bottom: 8px;
+}
+
+img {
+    max-height: 150px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+button {
+    background-color: #d9534f;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #c9302c;
+}
+
+a.button-link {
+    display: inline-block;
+    margin-top: 0px;
+    padding: 10px 15px;
+    background-color: #3498db; 
+    color: #fff; 
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+a.button-link:hover {
+    background-color: #2980b9; 
+}
+
+</style>
+<body>
+    <nav>
+        <div class="navbar">
+       
+
+            <h1 id="logo">AudioBook</h1><span>+</span>
+           
+
+          <div class="search">
+            <input type="text" id="yousearch" placeholder="Search for ProductS, Brands and More" >
+         <i class="fas fa-search"></i>
+
+          </div>
+         
+            <button id="Signup">Signup</button>
+            <h4 id="h4username"></h4>
+            <button id="login">Login</button>
+           
+           
+
+
+        </div>
+    </nav>
+
+        <button id="editProfileBtn">EDIT PROFILE</button>
+        <button id="createBtn">CREATE PLAYLIST</button>
+        <button id="ShowOwnBtn">YOUR PLAYLISTS</button>
+        <button id="ShowOthersBtn">OTHERS PLAYLISTS</button>
+
+    <div id="audiobookDetailsContainer"></div>
+    
+    <footer>
+        <div class="footer-section about">
+          <h2>About Us</h2>
+          <p>
+            Discover a seamless online shopping haven with our user-friendly e-commerce platform, offering curated products and a streamlined experience from browsing to checkout</p>
+        </div>
+    
+        <div class="footer-section contact">
+          <h2>Contact Us</h2>
+          <p>Email: SwipeKart+@gmail.com<br>Phone: +1 123 456 7890</p>
+        </div>
+    
+        <div class="footer-section links">
+          <h2>Quick Links</h2>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+    
+        <div class="footer-section newsletter">
+          <h2>Subscribe to Our SwipeKart</h2>
+          <form action="#" method="post">
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </footer>
+
+    <script>
+           function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+    
+        var paramValue = getParameterByName('course');
+        console.log('Parameter value:', paramValue);
+
+       async function fetchAudioBookByCourseId(id){
+            const response = await fetch(`https://real-lime-salamander-sari.cyclic.app/audio/audiogetBycId/${id}`)
+            const data = await response.json()
+            console.log(data)
+            displayData(data)
+
+
+
+       }
+
+       const audiobookDetailsContainer = document.getElementById("audiobookDetailsContainer");
+       function displayData(data) {
+    audiobookDetailsContainer.innerHTML = "";
+
+    data.forEach(element => {
+        const audiobookDetailsDiv = document.createElement("div");
+        audiobookDetailsDiv.id = "audiobookDetails";
+
+        const titleH5 = document.createElement("h5");
+        titleH5.textContent = element.Title;
+
+        const authorP = document.createElement("p");
+        authorP.textContent = `chapter: ${element.Author}`;
+
+        const lengthP = document.createElement("p");
+        lengthP.textContent = `Duration: ${element.Length}`;
+
+        const descriptionP = document.createElement("p");
+        descriptionP.textContent = `Description: ${element.Summary}`;
+        
+        const coverImage = document.createElement("img");
+        coverImage.src = element.CoverImage;
+        coverImage.style.maxWidth = "100%";
+
+        const playlistLink = document.createElement("a");
+        playlistLink.href = "playlist.html";
+        playlistLink.textContent = "Go to Playlist";
+        playlistLink.className = "button-link"; 
+        const deleteButton = document.createElement("button");
+deleteButton.textContent = "Delete";
+deleteButton.className = "delete-button";
+deleteButton.addEventListener("click", () => handleDelete(element.id)); 
+
+
+        audiobookDetailsDiv.appendChild(titleH5);
+        audiobookDetailsDiv.appendChild(authorP);
+        audiobookDetailsDiv.appendChild(lengthP);
+        audiobookDetailsDiv.appendChild(descriptionP);
+        audiobookDetailsDiv.appendChild(coverImage);
+        audiobookDetailsDiv.appendChild(playlistLink);
+        audiobookDetailsDiv.appendChild(deleteButton);
+        audiobookDetailsContainer.appendChild(audiobookDetailsDiv);
+    });
+}
+
+
+
+
+
+
+
+       fetchAudioBookByCourseId(paramValue)
+
+
+
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // const token = sessionStorage.getItem("token") || null;
+  // const currUserName = sessionStorage.getItem("name") || null;
+  // const currUserId = sessionStorage.getItem("currUserId") || null;
+
+  // const createBtn = document.getElementById("createBtn");
+  // const modalWrapper = document.querySelector("#modal__wrapper");
+  // const closeBtn = document.querySelector("#closeBtn");
+  // const renderPlaylist = document.getElementById("renderPlaylist");
+  // const createPLForm = document.getElementById("createPLForm");
+  // const renderMovies = document.getElementById("renderMovies");
+  // const baseURL = "https://shy-gray-butterfly-sock.cyclic.app";
+  // const listPL = document.getElementById("listPL");
+  // const ShowOthersBtn = document.getElementById("ShowOthersBtn");
+  // const ShowOwnBtn = document.getElementById("ShowOwnBtn");
+  // if (token) {
+  //   console.log(token);
+  //   userName.textContent = `Welcome back ${currUserName}`;
+  //   loginBtn.classList.add("hideBtn");
+  //   logoutBtn.classList.remove("hideBtn");
+  // } else {
+  //   document.querySelector("body").classList.add("blurr");
+  //   userName.textContent = null;
+  //   loginBtn.classList.remove("hideBtn");
+  //   logoutBtn.classList.add("hideBtn");
+
+  //   setTimeout(() => {
+  //     alert("You are not Logged In!!! Please login...");
+  //     window.location.href = "./mainPage.html";
+  //   }, 1000);
+  // }
+
+  // // Logout Button Listener
+
+  // logoutBtn.addEventListener("click", () => {
+  //   sessionStorage.removeItem("token");
+
+  //   alert("logout Sucessful");
+
+  //   window.location.href = "../index.html";
+  // });
+
+  // loginBtn.addEventListener("click", () => {
+  //   window.location.href = "./login.html";
+  // });
+
+  // // Event Listeners
+
+  // createBtn.addEventListener("click", () => {
+  //   openModal();
+  // });
+
+  // closeBtn.addEventListener("click", function () {
+  //   closeModal();
+  // });
+
+  // modalWrapper.addEventListener("click", function (e) {
+  //   if (e.target !== this) return;
+  //   closeModal();
+  // });
+
+  // document.addEventListener("keydown", function (e) {
+  //   if (e.key === "Escape") {
+  //     closeModal();
+  //   }
+  // });
+
+  // function openModal() {
+  //   // console.log("open");
+  //   modalWrapper.classList.add("active");
+  // }
+  // function closeModal() {
+  //   // console.log("close");
+  //   modalWrapper.classList.remove("active");
+  // }
+
+  // // Get User Playlists
+  // function fetchPlaylist(uid) {
+  //   fetch(`${baseURL}/playlist/getPL/${uid}`)
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       // console.log(result);
+  //       displayPlaylist(result.data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
+
+  // window.addEventListener("load", () => {
+  //   fetchPlaylist(currUserId);
+  // });
+
+  // function displayPlaylist(data) {
+  //   renderPlaylist.innerHTML = null;
+
+  //   if (data.length) {
+  //     renderPlaylist.style.display = "grid";
+  //     data.forEach((element, index) => {
+  //       const card = document.createElement("div");
+  //       card.className = "plCard";
+
+  //       const div = document.createElement("div");
+  //       const title = document.createElement("h3");
+  //       title.textContent =
+  //         element.title.length > 10
+  //           ? element.title.substring(0, 10) + "..."
+  //           : element.title;
+
+  //       const p = document.createElement("p");
+  //       if (element.isPrivate) {
+  //         p.className = "privatePL";
+  //         p.textContent = "Private";
+  //       } else {
+  //         p.className = "publicPL";
+  //         p.textContent = "Public";
+  //       }
+  //       const num = document.createElement("p");
+  //       num.textContent = element.movieList.length;
+  //       num.className = "numOfMovie";
+  //       div.append(title, p, num);
+
+  //       div.addEventListener("click", () => {
+  //         renderMovies.innerHTML = `<h2>Fetching data. Please wait...</h2>
+  //   <img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" alt="">`;
+  //         fetchMovieData(element._id);
+  //       });
+
+  //       const desc = document.createElement("p");
+  //       desc.textContent = element.description;
+
+  //       desc.addEventListener("click", () => {
+  //         renderMovies.innerHTML = `<h2>Fetching data. Please wait...</h2>
+  //   <img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" alt="">`;
+  //         fetchMovieData(element._id);
+  //       });
+
+  //       const delBtn = document.createElement("button");
+  //       delBtn.textContent = "Delete";
+  //       delBtn.id = "closeBtn";
+
+  //       delBtn.addEventListener("click", () => {
+  //         console.log("CLicked");
+  //         deletePlaylist(element._id);
+  //       });
+
+  //       card.append(div, desc, delBtn);
+
+  //       renderPlaylist.append(card);
+  //     });
+  //   } else {
+  //     renderPlaylist.style.display = "flex";
+  //     renderPlaylist.innerHTML = `<h2 style="color:grey">Currently, You do not have a playlist Please Add One..</h2>`;
+  //   }
+  // }
+
+  // Create PlayList
+
+  // createPLForm.addEventListener("submit", (e) => {
+  //   e.preventDefault();
+  //   const newPl = {
+  //     title: createPLForm[0].value,
+  //     description: createPLForm[1].value,
+  //     isPrivate: createPLForm[2].value,
+  //     userID: currUserId,
+  //     userName: currUserName,
+  //   };
+
+  //   fetch(`${baseURL}/playlist/add`, {
+  //     method: "POST",
+  //     headers: {
+  //       "content-type": "Application/JSON",
+  //       Auth: token,
+  //     },
+  //     body: JSON.stringify(newPl),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       alert(result.msg);
+  //       closeModal();
+  //       fetchPlaylist(currUserId);
+  //     })
+  //     .catch((err) => console.log(err));
+  // });
+
+  // function fetchMovieData(pId) {
+  //   fetch(`${baseURL}/playlist/getCurrPLMovies/${pId}`)
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       // console.log(result);
+  //       if (!result.data.length) {
+  //         renderMovies.style.display = "flex";
+  //         renderMovies.innerHTML = `<h2 style="color:grey">Playlist is Empty!!! Please add movie...</h2>`;
+  //       } else {
+  //         renderMovies.style.display = "grid";
+  //         renderMovies.innerHTML = displayMoviesData(result.data);
+  //         // Accessing Delete movie Buttons
+  //         const movieDelBtn = document.querySelectorAll(".deleteMovieBtn");
+
+  //         console.log(movieDelBtn);
+  //         movieDelBtn.forEach((ele) => {
+  //           ele.addEventListener("click", () => {
+  //             deleteMovieFromPlaylist(ele.getAttribute("data-id"), pId);
+  //           });
+  //         });
+  //       }
+  //     });
+  // }
+
+  // function displayMoviesData(data) {
+  //   return data
+  //     .map(
+  //       (ele, ind) => `
+  //   <div class="movieCard">
+  //     <img src="${ele.Poster}" />
+  //     <div class="nameAndYear">
+  //       <b>${ele.Title}</b>
+  //       <span>(${ele.Year})</span>
+  //     </div>
+  //     <h4>Type: ${ele.Type}</h4>
+  //     <button class="deleteMovieBtn" data-id="${ele._id}">Delete</button>
+  //   </div>
+  // `
+  //     )
+  //     .join("");
+  // }
+
+  // // Delete Playlist
+  // function deletePlaylist(id) {
+  //   fetch(`${baseURL}/playlist/deletePL/${id}`, {
+  //     method: "DELETE",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       alert(result.msg);
+  //       if (result.flag) {
+  //         fetchPlaylist(currUserId);
+  //       }
+  //     });
+  // }
+
+  // function deleteMovieFromPlaylist(mId, pId) {
+  //   fetch(`${baseURL}/playlist/${pId}/delete/${mId}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       "content-type": "Application/JSON",
+  //       Auth: token,
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       alert(result.msg);
+  //       fetchPlaylist(currUserId);
+  //       fetchMovieData(pId);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
+
+  // ShowOthersBtn.addEventListener("click", () => {
+  //   renderPlaylist.innerHTML = null;
+  //   renderMovies.innerHTML = null;
+  //   fetchOtherslaylist(currUserId);
+  // });
+
+  // ShowOwnBtn.addEventListener("click", () => {
+  //   renderPlaylist.innerHTML = null;
+  //   renderMovies.innerHTML = null;
+  //   fetchPlaylist(currUserId);
+  // });
+
+  // function fetchOtherslaylist(uid) {
+  //   fetch(`${baseURL}/playlist/getOthersPL/${uid}`)
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       // console.log(result);
+  //       displayOthersPlaylist(result.data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
+
+  // // Display Others Playlist
+  // function displayOthersPlaylist(data) {
+  //   renderPlaylist.innerHTML = null;
+
+  //   data.forEach((element, index) => {
+  //     const card = document.createElement("div");
+  //     card.className = "plCard";
+
+  //     const userId = document.createElement("p");
+  //     userId.className = "othersUserId";
+  //     userId.textContent = `UserId : ${element.userID}`;
+
+  //     const div = document.createElement("div");
+  //     const title = document.createElement("h3");
+  //     title.textContent =
+  //       element.title.length > 10
+  //         ? element.title.substring(0, 10) + "..."
+  //         : element.title;
+
+  //     const p = document.createElement("p");
+  //     if (element.isPrivate) {
+  //       p.className = "privatePL";
+  //       p.textContent = "Private";
+  //     } else {
+  //       p.className = "publicPL";
+  //       p.textContent = "Public";
+  //     }
+  //     const num = document.createElement("p");
+  //     num.textContent = element.movieList.length;
+  //     num.className = "numOfMovie";
+  //     div.append(title, p, num);
+
+  //     div.addEventListener("click", () => {
+  //       renderMovies.innerHTML = `<h2>Fetching data. Please wait...</h2>
+  //   <img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" alt="">`;
+  //       fetchOthersMovieData(element._id);
+  //     });
+
+  //     const desc = document.createElement("p");
+  //     desc.textContent = element.description;
+
+  //     desc.addEventListener("click", () => {
+  //       renderMovies.innerHTML = `<h2>Fetching data. Please wait...</h2>
+  //   <img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" alt="">`;
+  //       fetchOthersMovieData(element._id);
+  //     });
+
+  //     card.append(userId, div, desc);
+
+  //     renderPlaylist.append(card);
+  //   });
+  // }
+
+  // // Display others Playlist Movies
+  // function displayOthersMoviesData(data) {
+  //   return data
+  //     .map(
+  //       (ele, ind) => `
+  //   <div class="movieCard">
+  //     <img src="${ele.Poster}" />
+  //     <div class="nameAndYear">
+  //       <b>${ele.Title}</b>
+  //       <span>(${ele.Year})</span>
+  //     </div>
+  //     <h4>Type: ${ele.Type}</h4>
+  //   </div>
+  // `
+  //     )
+  //     .join("");
+  // }
+
+  // function fetchOthersMovieData(pId) {
+  //   fetch(`${baseURL}/playlist/getCurrPLMovies/${pId}`)
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       // console.log(result);
+  //       if (!result.data.length) {
+  //         renderMovies.style.display = "flex";
+
+  //         renderMovies.innerHTML = `<h2 style="color:grey">This Playlist is Empty!!! Check Other One...</h2>`;
+  //       } else {
+  //         renderMovies.style.display = "grid";
+  //         renderMovies.innerHTML = displayOthersMoviesData(result.data);
+  //       }
+  //     });
+  // }
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
