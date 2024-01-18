@@ -1,0 +1,141 @@
+{
+  "info": {
+    "name": "AudioBook API",
+    "_postman_id": "your_postman_id", // replace with your actual Postman ID
+    "description": "Collection of API endpoints for AudioBook application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Courses",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/course/courses",
+          "protocol": "http",
+          "host": ["localhost:8732"],
+          "path": ["course", "courses"]
+        }
+      }
+    },
+    {
+      "name": "Add Course",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"Title\": \"YourCourseTitle\",\n\t\"Instructor\": \"YourInstructor\",\n\t\"Length\": \"YourLength\",\n\t\"Description\": \"YourDescription\",\n\t\"CoverImage\": \"YourCoverImageURL\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/course/add",
+          "protocol": "http",
+          "host": ["localhost:8732"],
+          "path": ["course", "add"]
+        }
+      }
+    },
+    {
+      "name": "Delete Course",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/course/delete/:id", // replace :id with an actual course ID
+          "protocol": "http",
+          "host": ["localhost:8732"],
+          "path": ["course", "delete", ":id"]
+        }
+      }
+    },
+    {
+      "name": "Get All Audiobooks",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/audiobook/audioget",
+          "protocol": "http",
+          "host": ["localhost:8732"],
+          "path": ["audiobook", "audioget"]
+        }
+      }
+    },
+    {
+      "name": "Add Audiobook",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"courseId\": \"YourCourseID\",\n\t\"Title\": \"YourTitle\",\n\t\"Author\": \"YourAuthor\",\n\t\"Narrator\": \"YourNarrator\",\n\t\"Length\": \"YourLength\",\n\t\"Categories\": [\"Category1\", \"Category2\"],\n\t\"Summary\": \"YourSummary\",\n\t\"CoverImage\": \"YourCoverImageURL\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/audiobook/audioadd",
+          "protocol": "http",
+          "host": ["localhost:8732"],
+          "path": ["audiobook", "audioadd"]
+        }
+      }
+    },
+    {
+      "name": "Get Audiobooks by Course ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/audiobook/audiogetBycId/:cid", // replace :cid with an actual course ID
+          "protocol": "http",
+          "host": ["localhost:8732"],
+          "path": ["audiobook", "audiogetBycId", ":cid"]
+        }
+      }
+    },
+    {
+      "name": "User Registration",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"name\": \"YourName\",\n\t\"email\": \"YourEmail\",\n\t\"password\": \"YourPassword\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/register",
+          "protocol": "http",
+          "host": ["localhost:8732"],
+          "path": ["register"]
+        }
+      }
+    },
+    {
+      "name": "User Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"email\": \"YourEmail\",\n\t\"password\": \"YourPassword\"\n}"
+        },
+        "url
